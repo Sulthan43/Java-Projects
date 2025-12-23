@@ -1,0 +1,38 @@
+The Banking Management System is a console-based Java application that simulates core banking operations such as user registration, account creation, money transactions, and balance inquiry.
+The system is built using Java, JDBC, and MySQL, ensuring secure and reliable database-driven operations.
+This project demonstrates real-world banking workflows, transaction handling, and database consistency using JDBC transactions.
+
+Key Features:
+
+👤 User Management
+User registration with email and password
+Secure login authentication
+Prevents duplicate user registration
+
+🏦 Account Management
+Open a new bank account
+Auto-generated unique account number
+One account per user email
+
+💰 Banking Operations
+Credit Money (Deposit)
+Debit Money (Withdraw)
+Transfer Money between accounts
+Check Account Balance
+
+🔒 Security & Validation
+Security PIN verification for transactions
+Prevents overdraft (insufficient balance check)
+Uses PreparedStatement to avoid SQL Injection
+
+🔄 Transaction Handling
+Uses JDBC Transactions
+AutoCommit disabled during transactions
+Rollback on failure to maintain data integrity
+
+🛠️ Technologies Used
+Programming Language: Java
+Database: MySQL
+Database Connectivity: JDBC
+IDE: Eclipse / IntelliJ IDEA / VS Code
+JDBC Driver: MySQL Connector
