@@ -1,0 +1,29 @@
+The Hotel Reservation System is a console-based Java application developed to manage hotel room reservations efficiently. It uses JDBC (Java Database Connectivity) to interact with a MySQL database, allowing users to perform essential reservation operations such as booking rooms, viewing reservations, updating details, and deleting records.
+This project demonstrates the practical use of Java, SQL, and database connectivity, making it suitable for academic projects, mini projects, and beginner-level backend learning.
+
+Key Features:
+
+📋 Reserve a Room
+Add a new reservation with guest name, room number, and contact details.
+
+🔍 View Reservations
+Display all current reservations in a structured tabular format.
+
+🏷️ Get Room Number
+Retrieve the room number using reservation ID and guest name.
+
+✏️ Update Reservation
+Modify guest name, room number, or contact information.
+
+❌ Delete Reservation
+Remove an existing reservation using the reservation ID.
+
+🚪 Exit System Gracefully
+Clean exit with user-friendly messages.
+
+🛠️ Technologies Used
+Programming Language: Java
+Database: MySQL
+Connectivity: JDBC
+IDE: Eclipse / IntelliJ IDEA / VS Code
+Driver: MySQL Connector (JDBC Driver)
