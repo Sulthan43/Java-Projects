@@ -1,0 +1,31 @@
+The Hospital Management System is a console-based Java application designed to manage basic hospital operations such as patient management, doctor listing, and appointment booking.
+The system uses JDBC (Java Database Connectivity) to interact with a MySQL database, ensuring reliable storage and retrieval of hospital records.
+This project is ideal for academic mini-projects, backend practice, and understanding real-world database-driven Java applications.
+
+Key Features:
+
+👤 Patient Management:
+Add new patient details (Name, Age, Gender)
+View all registered patients
+Validate patient existence using Patient ID
+
+🩺 Doctor Management:
+View available doctors
+Display doctor specialization
+Validate doctor existence using Doctor ID
+
+📅 Appointment Booking::
+Book appointments for patients with doctors
+Prevent double booking on the same date
+Check doctor availability before confirming appointments
+
+🔒 Data Integrity:
+Uses PreparedStatement to prevent SQL Injection
+Validates patient and doctor IDs before booking
+
+🛠️ Technologies Used:
+Programming Language: Java
+Database: MySQL
+Database Connectivity: JDBC
+IDE: Eclipse / IntelliJ IDEA / VS Code
+Driver: MySQL Connector (JDBC Driver)
