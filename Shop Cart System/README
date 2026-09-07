@@ -1,0 +1,35 @@
+Shopping Cart System (Java Console Application)
+
+A simple Java-based Shopping Cart System built using Object-Oriented Programming principles and 
+the Decorator Pattern for applying product offers.
+
+Features:
+  Add products to cart
+  Display all products
+  Update product price
+  Remove products from cart
+  Apply offers (5% or 10% discount)
+  Auto-generated Product IDs
+  Menu-driven console interface
+
+Technologies Used:
+  Java
+  ArrayList
+  Interfaces
+  Abstract Classes
+  Decorator Pattern
+  Iterator
+
+Supported Products:
+  Shirt
+  T-Shirt
+  Pant
+
+Concepts Practiced:
+  Object-Oriented Programming (OOP)
+  Interface-based design
+  Factory-like object creation
+  Decorator Pattern
+  Collection Framework (ArrayList)
+  Iterator for safe deletion
+  Exception Handling
