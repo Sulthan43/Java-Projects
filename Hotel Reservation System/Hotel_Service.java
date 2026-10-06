@@ -1,14 +1,13 @@
 package customerDataHandling;
 
-import java.util.HashMap;
 import java.util.Scanner;
+import java.sql.*;
 
 public class HotelService {
 	
-	static HashMap<Integer,Customer> table = new HashMap<>();
 	Scanner scn = new Scanner(System.in);
 	
-	void reserve() {
+	void reserve(Connection con) {
 		try {
 			System.out.print("Enter Customer Name : ");
 			String name = scn.nextLine();
@@ -17,8 +16,15 @@ public class HotelService {
 			int room = scn.nextInt();
 			scn.nextLine();
 			
-			Customer cust = new Customer(name,room);
-			table.put(cust.getId(),cust); 
+			if(room <= 0 && room >= 16) {
+				System.out.println("\\n<---------- Enter Valid Room Number ---------->\\n");
+				return;
+			}
+			String query = "insert into customer_data(customer_name,room_No) values(?,?)";
+			PreparedStatement pst = con.prepareStatement(query);
+			pst.setInt(2, room);
+			pst.setString(1, name);
+			pst.executeUpdate();
 			
 			System.out.print("\n<---------- Reserved Successfully ---------->\n");
 			
@@ -26,48 +32,58 @@ public class HotelService {
 			e.printStackTrace();
 		}
 	}
-	void showAllCustomerDatas() {
+	void showAllCustomerDatas(Connection con) {
 		try {
+			Statement statement = con.createStatement();
+			ResultSet set = statement.executeQuery("select * from customer_data");
 			System.out.println("+-------------+---------------+----------------------+");
 			System.out.println("| Customer Id | Customer Name | Customer Room Number |");
 			System.out.println("+-------------+---------------+----------------------+");
-			for(Customer cust : table.values()) {
-					System.out.printf("| %-12d| %-14s| %-20d |\n",cust.getId(),cust.getName(),cust.getRoomNo());
+			while(set.next()) {
+					System.out.printf("| %-12d| %-14s| %-20d |\n",set.getInt(1),set.getString(2),set.getInt(3));
 					System.out.println("+-------------+---------------+----------------------+");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	void getCustomerDetail() {
+	
+	void getCustomerDetail(Connection con) {
 		try {
+			PreparedStatement st = con.prepareStatement("select * from customer_data where id = ?");
 			System.out.print("Enter Room Id : ");
 			int id = scn.nextInt();
 			
-			Customer cust = table.get(id);
+			st.setInt(1,id);
 			
-			if(cust == null) {
-				System.out.print("\n<---------- No Such a Data Exists ---------->\n");
-				return;
+			ResultSet result = st.executeQuery();
+			
+			if(result.next()) {
+				System.out.println("+-------------+---------------+----------------------+");
+				System.out.println("| Customer Id | Customer Name | Customer Room Number |");
+				System.out.println("+-------------+---------------+----------------------+");
+				System.out.printf("| %-12d| %-14s| %-20d |\n",result.getInt(1),result.getString(2),result.getInt(3));
+				System.out.println("+-------------+---------------+----------------------+");
+			}else {
+				System.out.print("\n<---------- Invalid ID  ---------->\n");
 			}
-			
-			System.out.println("+-------------+---------------+----------------------+");
-			System.out.println("| Customer Id | Customer Name | Customer Room Number |");
-			System.out.println("+-------------+---------------+----------------------+");
-			System.out.printf("| %-12d| %-14s| %-20d |\n",cust.getId(),cust.getName(),cust.getRoomNo());
-			System.out.println("+-------------+---------------+----------------------+");
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	void updateCustomerDetail() {
+	
+	void updateCustomerDetail(Connection con) {
 		try {
 			System.out.print("Enter Id of the Customer : ");
 			int id = scn.nextInt();
 			
-			if(!table.containsKey(id)){
-				System.out.println("\n<---------- Id Does not exist ---------->\n");
+			PreparedStatement st = con.prepareStatement("select * from customer_data where id = ?");
+			st.setInt(1, id);
+			ResultSet set = st.executeQuery();
+			
+			if(!set.next()) {
+				System.out.print("\n<---------- Invalid ID  ---------->\n");
 				return;
 			}
 			
@@ -88,35 +104,38 @@ public class HotelService {
 				System.out.println("\n<---------- Enter Valid Input ---------->\n");
 				return;
 			}
-			Customer cust = table.get(id);
 			
 			if(work == 1) {
-				cust.setName(newName);
+				st = con.prepareStatement("update customer_data set customer_name = ? where id = ?");
+				st.setString(1,newName);
+				st.setInt(2, id);
+				st.executeUpdate();
 				System.out.println("\n<---------- Updated Successfully ---------->\n");
-				return;
 			}else {
-				cust.setRoomNo(newRoom);
+				st = con.prepareStatement("update customer_data set room_No = ? where id = ?");
+				st.setInt(1,newRoom);
+				st.setInt(2, id);
+				st.executeUpdate();
 				System.out.println("\n<---------- Updated Successfully ---------->\n");
-				return;
 			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	void deleteCustomerData() {
+	void deleteCustomerData(Connection con) {
 		try {
-			
 			System.out.print("Enter the Customer ID : ");
 			int id = scn.nextInt();
 			
-			Customer cust = table.get(id);
-			
-			if(cust == null) {
-				System.out.print("\n<---------- No Such a Data Exists ---------->\n");
+			String query = "delete from customer_data where id = " + id;
+			Statement st = con.createStatement();
+			int row = st.executeUpdate(query);
+			if(row <= 0) {
+				System.out.println("\n<---------- Enter Valid Input ---------->\n");
 				return;
 			}
-			table.remove(id);
+			
 			System.out.print("\n<---------- Deleted Successfully ---------->\n");
 			
 		}catch(Exception e) {
