@@ -1,10 +1,18 @@
 package customerDataHandling;
 
 import java.util.*;
+import java.sql.*;
 
 public class MainMenu {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		
+		String url = "jdbc:mysql://localhost:3306/hotel_reserve_system";
+		String username = "root";
+		String password = "mysql@6196";
+		
+		Connection con = DriverManager.getConnection(url,username,password);
+		
 		HotelService service = new HotelService();
 		Scanner scn = new Scanner(System.in);
 		
@@ -26,23 +34,24 @@ public class MainMenu {
 					
 				switch(ans) {
 					case 1:
-						service.reserve();
+						service.reserve(con);
 						break;
 					case 2:
-						service.showAllCustomerDatas();
+						service.showAllCustomerDatas(con);
 						break;
 					case 3 :
-						service.getCustomerDetail();
+						service.getCustomerDetail(con);
 						break;
 					case 4:
-						service.updateCustomerDetail();
+						service.updateCustomerDetail(con);
 						break;
 					case 5:
-						service.deleteCustomerData();
+						service.deleteCustomerData(con);
 						break;
 					case 0:
 						run = false;
 						scn.close();
+						con.close();
 						break;
 				}
 			}catch(Exception e) {
